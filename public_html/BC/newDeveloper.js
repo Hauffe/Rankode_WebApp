@@ -5,7 +5,8 @@
  */
 
 $( document ).ready(function() {
-    
+
+
 var RANKODE_URL = "http://localhost:41115/service/api/";
 var GIT_URL = "";
 
@@ -14,33 +15,28 @@ var GIT_URL = "";
 
             $.ajax({
                url: RANKODE_URL+"developer/insert",
-               type: 'POST',
-               crossDomain: true,
-               data: JSON.stringify(obj),
-               dataType: "application/json",
-               xhrFields: {
-                    withCredentials: false
-               }
-            })
-            .done(function( data ) {
-                console.log("done");
-            })
-            .fail( function(xhr, textStatus, errorThrown) {
-                alert(textStatus);
+                dataType: "json",
+                type: 'POST',
+                data: JSON.stringify(obj),
+                crossDomain: true,
+                contentType: 'application/json',
+                mimeType: 'application/json',
+                success: function(data) { 
+                    alert('ok');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("error occurred");
+                } 
             });
     }
     
     var obj = {
-                projectsAsOwner:[],
-                projectsAsCollaborator:[],
                 accounts:[],
-                notifications:[],
-                login:"Johndoe",
+                login:"Johndoe2",
                 email:"Johndoe@doe.com",
                 password:"Johndoe123",
                 firstName:"John",
                 lastName:"Doe"
-                //name: $("#id-name").val(),
             };
     console.log(JSON.stringify(obj)+"\n"+RANKODE_URL+"developer/insert");
     insert(obj);
