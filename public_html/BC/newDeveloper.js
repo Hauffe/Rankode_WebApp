@@ -7,7 +7,7 @@
 $( document ).ready(function() {
 
 
-var RANKODE_URL = "http://localhost:41115/service/api/";
+var RANKODE_URL = "http://localhost:8080/service/api/";
 var GIT_URL = "";
 
     function insert(obj){
@@ -22,22 +22,27 @@ var GIT_URL = "";
                 contentType: 'application/json',
                 mimeType: 'application/json',
                 success: function(data) { 
-                    alert('ok');
+                    $("#resultCad").addClass("resultCad alert alert-success alert-dismissable fade in");
+                    $("#resultCad").append("<a href='' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
+                        "<strong>Success!</strong> Indicates a successful or positive action.");
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert("error occurred");
+                error: function(jqXHR) {
+                    $("#resultCad").addClass("resultCad alert alert-danger alert-dismissable fade in");
+                    alert(jqXHR.responseJSON);
                 } 
             });
     }
     
-    var obj = {
+    $("#newUser").click(function(){
+        var obj = {
                 accounts:[],
-                login:"Johndoe2",
-                email:"Johndoe@doe.com",
-                password:"Johndoe123",
-                firstName:"John",
-                lastName:"Doe"
+                login:$("#Login").val(),
+                email:$("#Email").val(),
+                password:$("#Password").val(),
+                firstName:$("#Nome").val(),
+                lastName:$("#Sobrenome").val()
             };
-    console.log(JSON.stringify(obj)+"\n"+RANKODE_URL+"developer/insert");
-    insert(obj);
+        console.log(JSON.stringify(obj));
+        insert(obj);
+    });
 });
