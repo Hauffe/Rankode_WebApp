@@ -9,6 +9,7 @@ $( document ).ready(function() {
 
 var RANKODE_URL = "http://localhost:8080/service/api/";
 var GIT_URL = "";
+var url = window.location.href;
 
     function insert(obj){
         var invocation = new XMLHttpRequest();
@@ -22,13 +23,18 @@ var GIT_URL = "";
                 contentType: 'application/json',
                 mimeType: 'application/json',
                 success: function(data) { 
-                    $("#resultCad").addClass("resultCad alert alert-success alert-dismissable fade in");
-                    $("#resultCad").append("<a href='' class='close' data-dismiss='alert' aria-label='close'>&times;</a>" +
-                        "<strong>Success!</strong> Indicates a successful or positive action.");
+                    $("#serviceResponse").append(
+                    "<div class='alert alert-success alert-dismissible fade in' role='alert'>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                        "</button>" + data +
+                    "</div>");
                 },
                 error: function(jqXHR) {
-                    $("#resultCad").addClass("resultCad alert alert-danger alert-dismissable fade in");
-                    alert(jqXHR.responseJSON);
+                  $("#serviceResponse").append(
+                    "<div class='alert alert-danger alert-dismissible fade in' role='alert'>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                        "</button>" + jqXHR.responseJSON  +
+                    "</div>");
                 } 
             });
     }
@@ -42,7 +48,6 @@ var GIT_URL = "";
                 firstName:$("#Nome").val(),
                 lastName:$("#Sobrenome").val()
             };
-        console.log(JSON.stringify(obj));
         insert(obj);
     });
 });

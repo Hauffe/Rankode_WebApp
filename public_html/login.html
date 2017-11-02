@@ -17,12 +17,8 @@
     <link href="template/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- Animate.css -->
     <link href="template/vendors/animate.css/animate.min.css" rel="stylesheet">
-
     <!-- Custom Theme Style -->
     <link href="template/build/css/custom.css" rel="stylesheet">
-    
-    <script src="template/documentation/js/jquery.min.js" type="text/javascript"></script>
-    <script src="BC/newDeveloper.js" type="text/javascript"></script>
   </head>
 
   <body class="login">
@@ -66,11 +62,8 @@
         </div>
 
         <div id="register" class="animate form registration_form">
-            <div class="resultCad alert alert-success alert-dismissable">
-              <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <strong>Success!</strong> Indicates a successful or positive action.
-            </div>
           <section class="login_content">
+              <div class="serviceResponse" id="serviceResponse"></div>
             <form id="newDev" action="" method="post">
               <h1>Criar conta</h1>
               <div>
@@ -116,5 +109,12 @@
         </div>
       </div>
     </div>
+    <!-- JS-->
+    <script src="template/documentation/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <script src="template/documentation/js/bootstrap.min.js"></script>
+    
+    <!-- Controler -->
+    <script src="BC/newDeveloper.js" type="text/javascript"></script>
   </body>
 </html>
