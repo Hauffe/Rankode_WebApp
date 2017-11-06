@@ -3,6 +3,114 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var getUrlParameter = function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+function unique(list) {
+  var result = [];
+  $.each(list, function(i, e) {
+    if ($.inArray(e, result) == -1) result.push(e);
+  });
+  return result;
+}
+
+var list = [];
+var xAxis = [];
+var seriesCA = [];
+var seriesCE = [];
+var seriesRMI = [];
+var seriesRMA = [];
+var seriesRMD = [];
+var seriesNOC = [];
+var seriesNOI = [];
+var seriesNOP = [];
+var seriesTLOC = [];
+
+function distributeValues(data){
+    $.each(data, function(index,result) {
+        list.push(result.commit.sha);
+        switch(result.metric.initials) {
+            case "CA":
+                seriesCA.push(result.value);
+                break;
+            case "CE":
+                seriesCE.push(result.value);
+                break;
+            case "RMI":
+                seriesRMI.push(result.value);
+                break;
+            case "RMA":
+                seriesRMA.push(result.value);
+                break;
+            case "RMD":
+                seriesRMD.push(result.value);
+                break;
+            case "NOC":
+                seriesNOC.push(result.value);
+                break;
+            case "NOI":
+                seriesNOI.push(result.value);
+                break;
+            case "NOP":
+                seriesNOP.push(result.value);
+                break;
+            case "TLOC":
+                seriesTLOC.push(result.value);
+                break;
+            default:
+                console.log('métrica não encontrada');
+            }
+    });
+    xAxis = unique(list);
+    init_echarts();
+    init_charts();
+    console.log(seriesNOP);
+}
+
+function populateGraphs(){
+            var RANKODE_URL = "http://localhost:41115/service/api/";
+            var source = getUrlParameter('name');
+    
+            var obj = {
+                commit:{results:[]},
+                metric:{target:{metrics:[]},influences:[]},
+                value:null,
+                source:source,
+                deltaValue:null
+            };
+
+
+            $.ajax({
+               url: RANKODE_URL+"result/findByFilter",
+                dataType: "json",
+                type: 'POST',
+                data: JSON.stringify(obj),
+                crossDomain: true,
+                contentType: 'application/json',
+                mimeType: 'application/json',
+                success: function(data) {
+                    distributeValues(data);
+                },
+                error: function(jqXHR) {
+                  console.log(jqXHR.responseJSON);
+                } 
+            });
+            
+
+}
+
 function init_charts() {
 
     console.log('run_charts  typeof [' + typeof (Chart) + ']');
@@ -18,392 +126,165 @@ function init_charts() {
 
 
 
-    if ($('#canvas_line').length ){
+        if ($('#canvas_line').length ){
 
-            var canvas_line_00 = new Chart(document.getElementById("canvas_line"), {
-              type: 'line',
-              data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                      label: "My First dataset",
-                      backgroundColor: "rgba(38, 185, 154, 0.31)",
-                      borderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(220,220,220,1)",
-                      pointBorderWidth: 1,
-                      data: [31, 74, 6, 39, 20, 85, 7]
-                    }, {
-                      label: "My Second dataset",
-                      backgroundColor: "rgba(3, 88, 106, 0.3)",
-                      borderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(151,187,205,1)",
-                      pointBorderWidth: 1,
-                      data: [82, 23, 66, 9, 99, 4, 2]
-                    }]
-              },
-            });
+                var canvas_line_00 = new Chart(document.getElementById("canvas_line"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "RMI",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesRMI
+                        }]
+                  },
+                });
 
-    }
+        }
 
 
-    if ($('#canvas_line1').length ){
+        if ($('#canvas_line1').length ){
 
-            var canvas_line_01 = new Chart(document.getElementById("canvas_line1"), {
-              type: 'line',
-              data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                      label: "My First dataset",
-                      backgroundColor: "rgba(38, 185, 154, 0.31)",
-                      borderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(220,220,220,1)",
-                      pointBorderWidth: 1,
-                      data: [31, 74, 6, 39, 20, 85, 7]
-                    }, {
-                      label: "My Second dataset",
-                      backgroundColor: "rgba(3, 88, 106, 0.3)",
-                      borderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(151,187,205,1)",
-                      pointBorderWidth: 1,
-                      data: [82, 23, 66, 9, 99, 4, 2]
-                    }]
-              },
-            });
+                var canvas_line_01 = new Chart(document.getElementById("canvas_line1"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "RMA",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesRMA
+                        }]
+                  }
+                });
 
-    }
+        }
 
 
-    if ($('#canvas_line2').length ){		
+        if ($('#canvas_line2').length ){		
 
-            var canvas_line_02 = new Chart(document.getElementById("canvas_line2"), {
-              type: 'line',
-              data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                      label: "My First dataset",
-                      backgroundColor: "rgba(38, 185, 154, 0.31)",
-                      borderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(220,220,220,1)",
-                      pointBorderWidth: 1,
-                      data: [31, 74, 6, 39, 20, 85, 7]
-                    }, {
-                      label: "My Second dataset",
-                      backgroundColor: "rgba(3, 88, 106, 0.3)",
-                      borderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(151,187,205,1)",
-                      pointBorderWidth: 1,
-                      data: [82, 23, 66, 9, 99, 4, 2]
-                    }]
-              },
-            });
+                var canvas_line_02 = new Chart(document.getElementById("canvas_line2"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "RMD",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesRMD
+                        }]
+                  }
+                });
 
-    }	
+        }	
 
 
-    if ($('#canvas_line3').length ){
+        if ($('#canvas_line3').length ){
 
-            var canvas_line_03 = new Chart(document.getElementById("canvas_line3"), {
-              type: 'line',
-              data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                      label: "My First dataset",
-                      backgroundColor: "rgba(38, 185, 154, 0.31)",
-                      borderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(220,220,220,1)",
-                      pointBorderWidth: 1,
-                      data: [31, 74, 6, 39, 20, 85, 7]
-                    }, {
-                      label: "My Second dataset",
-                      backgroundColor: "rgba(3, 88, 106, 0.3)",
-                      borderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(151,187,205,1)",
-                      pointBorderWidth: 1,
-                      data: [82, 23, 66, 9, 99, 4, 2]
-                    }]
-              },
-            });
+                var canvas_line_03 = new Chart(document.getElementById("canvas_line3"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "NOC",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesNOC
+                        }]
+                  },
+                });
 
-    }	
+        }	
 
 
-    if ($('#canvas_line4').length ){
+        if ($('#canvas_line4').length ){
 
-            var canvas_line_04 = new Chart(document.getElementById("canvas_line4"), {
-              type: 'line',
-              data: {
-                    labels: ["January", "February", "March", "April", "May", "June", "July"],
-                    datasets: [{
-                      label: "My First dataset",
-                      backgroundColor: "rgba(38, 185, 154, 0.31)",
-                      borderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                      pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(220,220,220,1)",
-                      pointBorderWidth: 1,
-                      data: [31, 74, 6, 39, 20, 85, 7]
-                    }, {
-                      label: "My Second dataset",
-                      backgroundColor: "rgba(3, 88, 106, 0.3)",
-                      borderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                      pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                      pointHoverBackgroundColor: "#fff",
-                      pointHoverBorderColor: "rgba(151,187,205,1)",
-                      pointBorderWidth: 1,
-                      data: [82, 23, 66, 9, 99, 4, 2]
-                    }]
-              },
-            });		
+                var canvas_line4 = new Chart(document.getElementById("canvas_line4"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "NOI",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesNOI
+                        }]
+                  },
+                });		
 
-    }
+        }
+        
+                if ($('#canvas_line5').length ){
 
+                var canvas_line_05 = new Chart(document.getElementById("canvas_line5"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "NOP",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesNOP
+                        }]
+                  },
+                });		
 
-      // Line chart
+        }
+        
+                if ($('#canvas_line6').length ){
 
-    if ($('#lineChart').length ){	
+                var canvas_line6 = new Chart(document.getElementById("canvas_line6"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "TLOC",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesTLOC
+                        }]
+                  },
+                });		
 
-      var ctx = document.getElementById("lineChart");
-      var lineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels: ["January", "February", "March", "April", "May", "June", "July"],
-              datasets: [{
-                    label: "My First dataset",
-                    backgroundColor: "rgba(38, 185, 154, 0.31)",
-                    borderColor: "rgba(38, 185, 154, 0.7)",
-                    pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                    pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(220,220,220,1)",
-                    pointBorderWidth: 1,
-                    data: [31, 74, 6, 39, 20, 85, 7]
-              }, {
-                    label: "My Second dataset",
-                    backgroundColor: "rgba(3, 88, 106, 0.3)",
-                    borderColor: "rgba(3, 88, 106, 0.70)",
-                    pointBorderColor: "rgba(3, 88, 106, 0.70)",
-                    pointBackgroundColor: "rgba(3, 88, 106, 0.70)",
-                    pointHoverBackgroundColor: "#fff",
-                    pointHoverBorderColor: "rgba(151,187,205,1)",
-                    pointBorderWidth: 1,
-                    data: [82, 23, 66, 9, 99, 4, 2]
-              }]
-            },
-      });
+        }
+        
 
-    }
-
-      // Bar chart
-
-    if ($('#mybarChart').length ){ 
-
-      var ctx = document.getElementById("mybarChart");
-      var mybarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-              labels: ["January", "February", "March", "April", "May", "June", "July"],
-              datasets: [{
-                    label: '# of Votes',
-                    backgroundColor: "#26B99A",
-                    data: [51, 30, 40, 28, 92, 50, 45]
-              }, {
-                    label: '# of Votes',
-                    backgroundColor: "#03586A",
-                    data: [41, 56, 25, 48, 72, 34, 12]
-              }]
-            },
-
-            options: {
-              scales: {
-                    yAxes: [{
-                      ticks: {
-                            beginAtZero: true
-                      }
-                    }]
-              }
-            }
-      });
-
-    } 
-
-
-      // Doughnut chart
-
-    if ($('#canvasDoughnut').length ){ 
-
-      var ctx = document.getElementById("canvasDoughnut");
-      var data = {
-            labels: [
-              "Dark Grey",
-              "Purple Color",
-              "Gray Color",
-              "Green Color",
-              "Blue Color"
-            ],
-            datasets: [{
-              data: [120, 50, 140, 180, 100],
-              backgroundColor: [
-                    "#455C73",
-                    "#9B59B6",
-                    "#BDC3C7",
-                    "#26B99A",
-                    "#3498DB"
-              ],
-              hoverBackgroundColor: [
-                    "#34495E",
-                    "#B370CF",
-                    "#CFD4D8",
-                    "#36CAAB",
-                    "#49A9EA"
-              ]
-
-            }]
-      };
-
-      var canvasDoughnut = new Chart(ctx, {
-            type: 'doughnut',
-            tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-            data: data
-      });
-
-    } 
-
-      // Radar chart
-
-    if ($('#canvasRadar').length ){ 
-
-      var ctx = document.getElementById("canvasRadar");
-      var data = {
-            labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-            datasets: [{
-              label: "My First dataset",
-              backgroundColor: "rgba(3, 88, 106, 0.2)",
-              borderColor: "rgba(3, 88, 106, 0.80)",
-              pointBorderColor: "rgba(3, 88, 106, 0.80)",
-              pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
-              pointHoverBackgroundColor: "#fff",
-              pointHoverBorderColor: "rgba(220,220,220,1)",
-              data: [65, 59, 90, 81, 56, 55, 40]
-            }, {
-              label: "My Second dataset",
-              backgroundColor: "rgba(38, 185, 154, 0.2)",
-              borderColor: "rgba(38, 185, 154, 0.85)",
-              pointColor: "rgba(38, 185, 154, 0.85)",
-              pointStrokeColor: "#fff",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(151,187,205,1)",
-              data: [28, 48, 40, 19, 96, 27, 100]
-            }]
-      };
-
-      var canvasRadar = new Chart(ctx, {
-            type: 'radar',
-            data: data,
-      });
-
-    }
-
-
-      // Pie chart
-      if ($('#pieChart').length ){
-
-              var ctx = document.getElementById("pieChart");
-              var data = {
-                    datasets: [{
-                      data: [120, 50, 140, 180, 100],
-                      backgroundColor: [
-                            "#455C73",
-                            "#9B59B6",
-                            "#BDC3C7",
-                            "#26B99A",
-                            "#3498DB"
-                      ],
-                      label: 'My dataset' // for legend
-                    }],
-                    labels: [
-                      "Dark Gray",
-                      "Purple",
-                      "Gray",
-                      "Green",
-                      "Blue"
-                    ]
-              };
-
-              var pieChart = new Chart(ctx, {
-                    data: data,
-                    type: 'pie',
-                    otpions: {
-                      legend: false
-                    }
-              });
-
-      }
-
-
-      // PolarArea chart
-
-    if ($('#polarArea').length ){
-
-            var ctx = document.getElementById("polarArea");
-            var data = {
-            datasets: [{
-              data: [120, 50, 140, 180, 100],
-              backgroundColor: [
-                    "#455C73",
-                    "#9B59B6",
-                    "#BDC3C7",
-                    "#26B99A",
-                    "#3498DB"
-              ],
-              label: 'My dataset'
-            }],
-            labels: [
-              "Dark Gray",
-              "Purple",
-              "Gray",
-              "Green",
-              "Blue"
-            ]
-            };
-
-            var polarArea = new Chart(ctx, {
-            data: data,
-            type: 'polarArea',
-            options: {
-              scale: {
-                    ticks: {
-                      beginAtZero: true
-                    }
-              }
-            }
-            });
-
-    }
     }
 
     /* DATA TABLES */
@@ -550,7 +431,6 @@ function init_charts() {
 
     };
 
-
     /* COMPOSE */
 
     function init_compose() {
@@ -566,228 +446,225 @@ function init_charts() {
 
     function init_echarts() {
 
-                    if( typeof (echarts) === 'undefined'){ return; }
-                    console.log('init_echarts');
+            if( typeof (echarts) === 'undefined'){ return; }
+            console.log('init_echarts');
+            var theme = {
+              color: [
+                      '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
+                      '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
+              ],
 
+              title: {
+                      itemGap: 8,
+                      textStyle: {
+                              fontWeight: 'normal',
+                              color: '#408829'
+                      }
+              },
 
-                      var theme = {
-                      color: [
-                              '#26B99A', '#34495E', '#BDC3C7', '#3498DB',
-                              '#9B59B6', '#8abb6f', '#759c6a', '#bfd3b7'
-                      ],
+              dataRange: {
+                      color: ['#1f610a', '#97b58d']
+              },
 
-                      title: {
-                              itemGap: 8,
-                              textStyle: {
-                                      fontWeight: 'normal',
+              toolbox: {
+                      color: ['#408829', '#408829', '#408829', '#408829']
+              },
+
+              tooltip: {
+                      backgroundColor: 'rgba(0,0,0,0.5)',
+                      axisPointer: {
+                              type: 'line',
+                              lineStyle: {
+                                      color: '#408829',
+                                      type: 'dashed'
+                              },
+                              crossStyle: {
                                       color: '#408829'
-                              }
-                      },
-
-                      dataRange: {
-                              color: ['#1f610a', '#97b58d']
-                      },
-
-                      toolbox: {
-                              color: ['#408829', '#408829', '#408829', '#408829']
-                      },
-
-                      tooltip: {
-                              backgroundColor: 'rgba(0,0,0,0.5)',
-                              axisPointer: {
-                                      type: 'line',
-                                      lineStyle: {
-                                              color: '#408829',
-                                              type: 'dashed'
-                                      },
-                                      crossStyle: {
-                                              color: '#408829'
-                                      },
-                                      shadowStyle: {
-                                              color: 'rgba(200,200,200,0.3)'
-                                      }
-                              }
-                      },
-
-                      dataZoom: {
-                              dataBackgroundColor: '#eee',
-                              fillerColor: 'rgba(64,136,41,0.2)',
-                              handleColor: '#408829'
-                      },
-                      grid: {
-                              borderWidth: 0
-                      },
-
-                      categoryAxis: {
-                              axisLine: {
-                                      lineStyle: {
-                                              color: '#408829'
-                                      }
                               },
-                              splitLine: {
-                                      lineStyle: {
-                                              color: ['#eee']
-                                      }
+                              shadowStyle: {
+                                      color: 'rgba(200,200,200,0.3)'
                               }
-                      },
+                      }
+              },
 
-                      valueAxis: {
-                              axisLine: {
-                                      lineStyle: {
-                                              color: '#408829'
-                                      }
-                              },
-                              splitArea: {
-                                      show: true,
-                                      areaStyle: {
-                                              color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
-                                      }
-                              },
-                              splitLine: {
-                                      lineStyle: {
-                                              color: ['#eee']
-                                      }
-                              }
-                      },
-                      timeline: {
+              dataZoom: {
+                      dataBackgroundColor: '#eee',
+                      fillerColor: 'rgba(64,136,41,0.2)',
+                      handleColor: '#408829'
+              },
+              grid: {
+                      borderWidth: 0
+              },
+
+              categoryAxis: {
+                      axisLine: {
                               lineStyle: {
                                       color: '#408829'
-                              },
-                              controlStyle: {
-                                      normal: {color: '#408829'},
-                                      emphasis: {color: '#408829'}
                               }
                       },
-
-                      k: {
-                              itemStyle: {
-                                      normal: {
-                                              color: '#68a54a',
-                                              color0: '#a9cba2',
-                                              lineStyle: {
-                                                      width: 1,
-                                                      color: '#408829',
-                                                      color0: '#86b379'
-                                              }
-                                      }
+                      splitLine: {
+                              lineStyle: {
+                                      color: ['#eee']
                               }
-                      },
-                      map: {
-                              itemStyle: {
-                                      normal: {
-                                              areaStyle: {
-                                                      color: '#ddd'
-                                              },
-                                              label: {
-                                                      textStyle: {
-                                                              color: '#c12e34'
-                                                      }
-                                              }
-                                      },
-                                      emphasis: {
-                                              areaStyle: {
-                                                      color: '#99d2dd'
-                                              },
-                                              label: {
-                                                      textStyle: {
-                                                              color: '#c12e34'
-                                                      }
-                                              }
-                                      }
-                              }
-                      },
-                      force: {
-                              itemStyle: {
-                                      normal: {
-                                              linkStyle: {
-                                                      strokeColor: '#408829'
-                                              }
-                                      }
-                              }
-                      },
-                      chord: {
-                              padding: 4,
-                              itemStyle: {
-                                      normal: {
-                                              lineStyle: {
-                                                      width: 1,
-                                                      color: 'rgba(128, 128, 128, 0.5)'
-                                              },
-                                              chordStyle: {
-                                                      lineStyle: {
-                                                              width: 1,
-                                                              color: 'rgba(128, 128, 128, 0.5)'
-                                                      }
-                                              }
-                                      },
-                                      emphasis: {
-                                              lineStyle: {
-                                                      width: 1,
-                                                      color: 'rgba(128, 128, 128, 0.5)'
-                                              },
-                                              chordStyle: {
-                                                      lineStyle: {
-                                                              width: 1,
-                                                              color: 'rgba(128, 128, 128, 0.5)'
-                                                      }
-                                              }
-                                      }
-                              }
-                      },
-                      gauge: {
-                              startAngle: 225,
-                              endAngle: -45,
-                              axisLine: {
-                                      show: true,
-                                      lineStyle: {
-                                              color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
-                                              width: 8
-                                      }
-                              },
-                              axisTick: {
-                                      splitNumber: 10,
-                                      length: 12,
-                                      lineStyle: {
-                                              color: 'auto'
-                                      }
-                              },
-                              axisLabel: {
-                                      textStyle: {
-                                              color: 'auto'
-                                      }
-                              },
-                              splitLine: {
-                                      length: 18,
-                                      lineStyle: {
-                                              color: 'auto'
-                                      }
-                              },
-                              pointer: {
-                                      length: '90%',
-                                      color: 'auto'
-                              },
-                              title: {
-                                      textStyle: {
-                                              color: '#333'
-                                      }
-                              },
-                              detail: {
-                                      textStyle: {
-                                              color: 'auto'
-                                      }
-                              }
-                      },
-                      textStyle: {
-                              fontFamily: 'Arial, Verdana, sans-serif'
                       }
-              };
+              },
+
+              valueAxis: {
+                      axisLine: {
+                              lineStyle: {
+                                      color: '#408829'
+                              }
+                      },
+                      splitArea: {
+                              show: true,
+                              areaStyle: {
+                                      color: ['rgba(250,250,250,0.1)', 'rgba(200,200,200,0.1)']
+                              }
+                      },
+                      splitLine: {
+                              lineStyle: {
+                                      color: ['#eee']
+                              }
+                      }
+              },
+              timeline: {
+                      lineStyle: {
+                              color: '#408829'
+                      },
+                      controlStyle: {
+                              normal: {color: '#408829'},
+                              emphasis: {color: '#408829'}
+                      }
+              },
+
+              k: {
+                      itemStyle: {
+                              normal: {
+                                      color: '#68a54a',
+                                      color0: '#a9cba2',
+                                      lineStyle: {
+                                              width: 1,
+                                              color: '#408829',
+                                              color0: '#86b379'
+                                      }
+                              }
+                      }
+              },
+              map: {
+                      itemStyle: {
+                              normal: {
+                                      areaStyle: {
+                                              color: '#ddd'
+                                      },
+                                      label: {
+                                              textStyle: {
+                                                      color: '#c12e34'
+                                              }
+                                      }
+                              },
+                              emphasis: {
+                                      areaStyle: {
+                                              color: '#99d2dd'
+                                      },
+                                      label: {
+                                              textStyle: {
+                                                      color: '#c12e34'
+                                              }
+                                      }
+                              }
+                      }
+              },
+              force: {
+                      itemStyle: {
+                              normal: {
+                                      linkStyle: {
+                                              strokeColor: '#408829'
+                                      }
+                              }
+                      }
+              },
+              chord: {
+                      padding: 4,
+                      itemStyle: {
+                              normal: {
+                                      lineStyle: {
+                                              width: 1,
+                                              color: 'rgba(128, 128, 128, 0.5)'
+                                      },
+                                      chordStyle: {
+                                              lineStyle: {
+                                                      width: 1,
+                                                      color: 'rgba(128, 128, 128, 0.5)'
+                                              }
+                                      }
+                              },
+                              emphasis: {
+                                      lineStyle: {
+                                              width: 1,
+                                              color: 'rgba(128, 128, 128, 0.5)'
+                                      },
+                                      chordStyle: {
+                                              lineStyle: {
+                                                      width: 1,
+                                                      color: 'rgba(128, 128, 128, 0.5)'
+                                              }
+                                      }
+                              }
+                      }
+              },
+              gauge: {
+                      startAngle: 225,
+                      endAngle: -45,
+                      axisLine: {
+                              show: true,
+                              lineStyle: {
+                                      color: [[0.2, '#86b379'], [0.8, '#68a54a'], [1, '#408829']],
+                                      width: 8
+                              }
+                      },
+                      axisTick: {
+                              splitNumber: 10,
+                              length: 12,
+                              lineStyle: {
+                                      color: 'auto'
+                              }
+                      },
+                      axisLabel: {
+                              textStyle: {
+                                      color: 'auto'
+                              }
+                      },
+                      splitLine: {
+                              length: 18,
+                              lineStyle: {
+                                      color: 'auto'
+                              }
+                      },
+                      pointer: {
+                              length: '90%',
+                              color: 'auto'
+                      },
+                      title: {
+                              textStyle: {
+                                      color: '#333'
+                              }
+                      },
+                      detail: {
+                              textStyle: {
+                                      color: 'auto'
+                              }
+                      }
+              },
+              textStyle: {
+                      fontFamily: 'Arial, Verdana, sans-serif'
+              }
+      };
 
                //echart Line
 
             if ($('#echart_line').length ){ 
-
+              
               var echartLine = echarts.init(document.getElementById('echart_line'), theme);
-
               echartLine.setOption({
                     title: {
                       text: 'CA e CE',
@@ -828,7 +705,7 @@ function init_charts() {
                     xAxis: [{
                       type: 'category',
                       boundaryGap: false,
-                      data: ['[commit]', '[commit]', '[commit]', '[commit]', '[commit]', '[commit]', '[commit]']
+                      data: xAxis
                     }],
                     yAxis: [{
                       type: 'value'
@@ -844,7 +721,7 @@ function init_charts() {
                               }
                             }
                       },
-                      data: [10, 12, 21, 54, 260, 830, 710]
+                      data: seriesCA
                     }, {
                       name: 'CE',
                       type: 'line',
@@ -856,19 +733,19 @@ function init_charts() {
                               }
                             }
                       },
-                      data: [30, 182, 434, 791, 390, 30, 10]
+                      data: seriesCE
                     }]
               });
-
             } 
 
+        
     }  
 
 
 $(document).ready(function() {
+                populateGraphs();
                 init_DataTables();
                 init_CustomNotification();
-		init_charts();
-		init_echarts();
 		init_compose();
+                
 	});
