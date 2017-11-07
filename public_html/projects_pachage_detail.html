@@ -174,18 +174,13 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-          <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Project Detail <small> design</small></h3>
+                <h3>Projeto <small id="project_name"> [project_name] </small></h3>
               </div>
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
                   </div>
                 </div>
               </div>
@@ -197,7 +192,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Status do projeto</h2>
+                    <h2 >Pacote <small id="package_name"> [package_name] </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -215,11 +210,9 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-
+                    
                   <div class="x_content">
-
-                    <div class="col-md-9 col-sm-9 col-xs-12">
-
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                       <ul class="stats-overview">
                         <li>
                           <span class="name"> Métodos </span>
@@ -235,177 +228,20 @@
                         </li>
                       </ul>
                       <br />
-                      <div>
-                        <h4>Atividades Recentes</h4>
-                        <!-- end of user messages -->
-                        <ul class="messages">
-                          <li>
-                            <img src="images/img.png" class="avatar" alt="Avatar">
-                            <div class="message_date">
-                              <h3 class="date text-info">24</h3>
-                              <p class="month">May</p>
-                            </div>
-                            <div class="message_wrapper">
-                              <h4 class="heading">[Developer]</h4>
-                              <blockquote class="message">[Comentario]</blockquote>
-                            </div>
-                          </li>
-                        </ul>
-                        <!-- end of user messages -->
-                      </div>
+                      <div id="echart_line" style="height:350px;"></div>
                     </div>
-                    <!-- start project-detail sidebar -->
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                      <section class="panel">
-                        <div class="x_title">
-                          <h2>Descrição do projeto</h2>
-                          <div class="clearfix"></div>
-                        </div>
-                        <div class="panel-body">
-                          <h3 class="green"><i class="fa fa-paint-brush"></i> Projeto</h3>
-
-                          <p>[Descrição]</p>
-                          <br />
-
-                          <div class="project_detail">
-                            <p class="title">[Lider do Projeto]</p>
-                            <p>[Nome do lider]</p>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                    <!-- end project-detail sidebar -->
                   </div>
+                    
                 </div>
               </div>
             </div>
-           
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                      <div class="x_title">
-                        <h2>Pacotes do projeto <small>Nomes</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                          </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                              <li><a href="#">Settings 1</a>
-                              </li>
-                              <li><a href="#">Settings 2</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li><a class="close-link"><i class="fa fa-close"></i></a>
-                          </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                      </div>
-                      <div class="x_content">
-                        <p class="text-muted font-13 m-b-30">
-                          Pacotes do proneto serão listados aqui:
-                        </p>
-                        <table class="table table-striped table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Nome</th>
-                              <th>Source</th>
-                            </tr>
-                          </thead>
-                          <tbody id="packagesNames"></tbody>
-                        </table>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            
             
             <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                      <div class="x_title">
-                        <h2>Classes do projeto <small>nomes</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                          </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                              <li><a href="#">Settings 1</a>
-                              </li>
-                              <li><a href="#">Settings 2</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li><a class="close-link"><i class="fa fa-close"></i></a>
-                          </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                      </div>
-                      <div class="x_content">
-                        <p class="text-muted font-13 m-b-30">
-                          Classes do proneto serão listados aqui:
-                        </p>
-                        <table class="table table-striped table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Position</th>
-                            </tr>
-                          </thead>
-                          <tbody id="classesNames"></tbody>
-                        </table>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                      <div class="x_title">
-                        <h2>Métodos do proneto<small>nomes</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                          </li>
-                          <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                            <ul class="dropdown-menu" role="menu">
-                              <li><a href="#">Settings 1</a>
-                              </li>
-                              <li><a href="#">Settings 2</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li><a class="close-link"><i class="fa fa-close"></i></a>
-                          </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                      </div>
-                      <div class="x_content">
-                        <p class="text-muted font-13 m-b-30">
-                          Métodos do proneto serão listados aqui:
-                        </p>
-                        <table id="datatable3" class="table table-striped table-bordered">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>Position</th>
-                            </tr>
-                          </thead>
-                          <tbody id="methodsNames"></tbody>
-                        </table>
-                      </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-md-12">
+                
+              <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Detalhes do projeto</h2>
+                    <h2>Line Graph <small>Sessions</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -423,23 +259,185 @@
                     </ul>
                     <div class="clearfix"></div>
                   </div>
-
                   <div class="x_content">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                      <br />
-                        <div id="echart_scatter" style="height:350px;"></div>
-                    </div>
-                    <!-- end project-detail sidebar -->
-
+                    <canvas id="canvas_line"></canvas>
                   </div>
                 </div>
               </div>
+                
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line1"></canvas>
+                  </div>
+                </div>
+              </div>
+                 
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line2"></canvas>
+                  </div>
+                </div>
+              </div>
+                
+            </div>
+            <div class="row">
+                
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line6"></canvas>
+                  </div>
+                </div>
+              </div>
+                
+            </div>
+            <div class="row">
+                
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line3"></canvas>
+                  </div>
+                </div>
+              </div>
+                
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line4"></canvas>
+                  </div>
+                </div>
+              </div>
+                 
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Line Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <canvas id="canvas_line5"></canvas>
+                  </div>
+                </div>
+              </div>
+                
+            </div>
+            
             </div>
             
         </div>
-            
-            
-            
         <!-- /page content -->
 
         <!-- footer content -->
@@ -451,7 +449,6 @@
         </footer>
         <!-- /footer content -->
       </div>
-    </div>
 
     <!-- jQuery -->
     <script src="template/vendors/jquery/dist/jquery.min.js"></script>
@@ -459,18 +456,20 @@
     <script src="template/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
     <script src="template/vendors/fastclick/lib/fastclick.js"></script>
+    
     <!-- NProgress -->
     <script src="template/vendors/nprogress/nprogress.js"></script>
+    
     <!-- ECharts -->
     <script src="template/vendors/echarts/dist/echarts.min.js"></script>
-
+    <!-- Chart.js -->
+    <script src="template/vendors/Chart.js/dist/Chart.min.js"></script>
+    
+   
     <!-- Controler -->
-    <script src="controler/projectsDetailControler.js"></script>
+    <script src="controler/projectsPachageControler.js"></script>
     <script src="controler/DefaultConfig.js"></script>
     
-    <!-- Custom Theme Scripts 
-    <script src="template/build/js/custom.js"></script> -->
     
-
   </body>
 </html>
