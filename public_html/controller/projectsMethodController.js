@@ -28,46 +28,26 @@ function unique(list) {
 
 var list = [];
 var xAxis = [];
-var seriesCA = [];
-var seriesCE = [];
-var seriesRMI = [];
-var seriesRMA = [];
-var seriesRMD = [];
-var seriesNOC = [];
-var seriesNOI = [];
-var seriesNOP = [];
-var seriesTLOC = [];
+var seriesMLOC = [];
+var seriesPAR = [];
+var seriesVG = [];
+var seriesNBD = [];
 
 function distributeValues(data){
     $.each(data, function(index,result) {
         list.push(result.commit.sha);
         switch(result.metric.initials) {
-            case "CA":
-                seriesCA.push(result.value);
+            case "MLOC":
+                seriesMLOC.push(result.value);
                 break;
-            case "CE":
-                seriesCE.push(result.value);
+            case "PAR":
+                seriesPAR.push(result.value);
                 break;
-            case "RMI":
-                seriesRMI.push(result.value);
+            case "VG":
+                seriesVG.push(result.value);
                 break;
-            case "RMA":
-                seriesRMA.push(result.value);
-                break;
-            case "RMD":
-                seriesRMD.push(result.value);
-                break;
-            case "NOC":
-                seriesNOC.push(result.value);
-                break;
-            case "NOI":
-                seriesNOI.push(result.value);
-                break;
-            case "NOP":
-                seriesNOP.push(result.value);
-                break;
-            case "TLOC":
-                seriesTLOC.push(result.value);
+            case "NBD":
+                seriesNBD.push(result.value);
                 break;
             default:
                 console.log('métrica não encontrada');
@@ -76,7 +56,6 @@ function distributeValues(data){
     xAxis = unique(list);
     init_echarts();
     init_charts();
-    console.log(seriesNOP);
 }
 
 function populateGraphs(){
@@ -133,7 +112,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMI",
+                          label: "MLOC",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -141,9 +120,10 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMI
+                          data: seriesMLOC
                         }]
-                  },
+                  }
+                  
                 });
 
         }
@@ -156,7 +136,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMA",
+                          label: "PAR",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -164,7 +144,7 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMA
+                          data: seriesPAR
                         }]
                   }
                 });
@@ -179,7 +159,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMD",
+                          label: "NBD",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -187,7 +167,7 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMD
+                          data: seriesNBD
                         }]
                   }
                 });
@@ -216,74 +196,6 @@ function init_charts() {
                 });
 
         }	
-
-
-        if ($('#canvas_line4').length ){
-
-                var canvas_line4 = new Chart(document.getElementById("canvas_line4"), {
-                  type: 'line',
-                  data: {
-                        labels: xAxis,
-                        datasets: [{
-                          label: "NOI",
-                          backgroundColor: "rgba(38, 185, 154, 0.31)",
-                          borderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                          pointHoverBackgroundColor: "#fff",
-                          pointHoverBorderColor: "rgba(220,220,220,1)",
-                          pointBorderWidth: 1,
-                          data: seriesNOI
-                        }]
-                  },
-                });		
-
-        }
-        
-                if ($('#canvas_line5').length ){
-
-                var canvas_line_05 = new Chart(document.getElementById("canvas_line5"), {
-                  type: 'line',
-                  data: {
-                        labels: xAxis,
-                        datasets: [{
-                          label: "NOP",
-                          backgroundColor: "rgba(38, 185, 154, 0.31)",
-                          borderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                          pointHoverBackgroundColor: "#fff",
-                          pointHoverBorderColor: "rgba(220,220,220,1)",
-                          pointBorderWidth: 1,
-                          data: seriesNOP
-                        }]
-                  },
-                });		
-
-        }
-        
-                if ($('#canvas_line6').length ){
-
-                var canvas_line6 = new Chart(document.getElementById("canvas_line6"), {
-                  type: 'line',
-                  data: {
-                        labels: xAxis,
-                        datasets: [{
-                          label: "TLOC",
-                          backgroundColor: "rgba(38, 185, 154, 0.31)",
-                          borderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
-                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
-                          pointHoverBackgroundColor: "#fff",
-                          pointHoverBorderColor: "rgba(220,220,220,1)",
-                          pointBorderWidth: 1,
-                          data: seriesTLOC
-                        }]
-                  },
-                });		
-
-        }
-        
 
     }
 
@@ -667,8 +579,8 @@ function init_charts() {
               var echartLine = echarts.init(document.getElementById('echart_line'), theme);
               echartLine.setOption({
                     title: {
-                      text: 'CA e CE',
-                      subtext: 'Acoplamento'
+                      text: 'McCabe Complexidade Ciclomática',
+                      subtext: 'Complexidade'
                     },
                     tooltip: {
                       trigger: 'axis'
@@ -711,7 +623,7 @@ function init_charts() {
                       type: 'value'
                     }],
                     series: [{
-                      name: 'CA',
+                      name: 'Complexidade Ciclomática',
                       type: 'line',
                       smooth: true,
                       itemStyle: {
@@ -721,19 +633,7 @@ function init_charts() {
                               }
                             }
                       },
-                      data: seriesCA
-                    }, {
-                      name: 'CE',
-                      type: 'line',
-                      smooth: true,
-                      itemStyle: {
-                            normal: {
-                              areaStyle: {
-                                    type: 'default'
-                              }
-                            }
-                      },
-                      data: seriesCE
+                      data: seriesVG
                     }]
               });
             } 

@@ -28,46 +28,50 @@ function unique(list) {
 
 var list = [];
 var xAxis = [];
-var seriesCA = [];
-var seriesCE = [];
-var seriesRMI = [];
-var seriesRMA = [];
-var seriesRMD = [];
-var seriesNOC = [];
-var seriesNOI = [];
-var seriesNOP = [];
-var seriesTLOC = [];
+var seriesDIT = [];
+var seriesWMC = [];
+var seriesLCOM = [];
+var seriesSIX = [];
+var seriesNSC = [];
+var seriesNOF = [];
+var seriesNSF = [];
+var seriesNSM = [];
+var seriesNORM = [];
+var seriesNOM = [];
 
 function distributeValues(data){
     $.each(data, function(index,result) {
         list.push(result.commit.sha);
         switch(result.metric.initials) {
-            case "CA":
-                seriesCA.push(result.value);
+            case "DIT":
+                seriesDIT.push(result.value);
                 break;
-            case "CE":
-                seriesCE.push(result.value);
+            case "WMC":
+                seriesWMC.push(result.value);
                 break;
-            case "RMI":
-                seriesRMI.push(result.value);
+            case "LCOM":
+                seriesLCOM.push(result.value);
                 break;
-            case "RMA":
-                seriesRMA.push(result.value);
+            case "SIX":
+                seriesSIX.push(result.value);
                 break;
-            case "RMD":
-                seriesRMD.push(result.value);
+            case "NSC":
+                seriesNSC.push(result.value);
                 break;
-            case "NOC":
-                seriesNOC.push(result.value);
+            case "NOF":
+                seriesNOF.push(result.value);
                 break;
-            case "NOI":
-                seriesNOI.push(result.value);
+            case "NSF":
+                seriesNSF.push(result.value);
                 break;
-            case "NOP":
-                seriesNOP.push(result.value);
+            case "NSM":
+                seriesNSM.push(result.value);
                 break;
-            case "TLOC":
-                seriesTLOC.push(result.value);
+            case "NORM":
+                seriesNORM.push(result.value);
+                break;
+            case "NOM":
+                seriesNOM.push(result.value);
                 break;
             default:
                 console.log('métrica não encontrada');
@@ -76,7 +80,6 @@ function distributeValues(data){
     xAxis = unique(list);
     init_echarts();
     init_charts();
-    console.log(seriesNOP);
 }
 
 function populateGraphs(){
@@ -124,8 +127,6 @@ function init_charts() {
             enabled: false
     };
 
-
-
         if ($('#canvas_line').length ){
 
                 var canvas_line_00 = new Chart(document.getElementById("canvas_line"), {
@@ -133,7 +134,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMI",
+                          label: "DIT",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -141,13 +142,12 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMI
+                          data: seriesDIT
                         }]
-                  },
+                  }
                 });
 
         }
-
 
         if ($('#canvas_line1').length ){
 
@@ -156,7 +156,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMA",
+                          label: "NSM",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -164,22 +164,20 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMA
+                          data: seriesNSM
                         }]
                   }
                 });
-
         }
 
-
-        if ($('#canvas_line2').length ){		
+        if ($('#canvas_line2').length ){
 
                 var canvas_line_02 = new Chart(document.getElementById("canvas_line2"), {
                   type: 'line',
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "RMD",
+                          label: "NSF",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -187,13 +185,11 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesRMD
+                          data: seriesNSF
                         }]
                   }
                 });
-
-        }	
-
+        }
 
         if ($('#canvas_line3').length ){
 
@@ -202,7 +198,7 @@ function init_charts() {
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "NOC",
+                          label: "LCOM",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -210,22 +206,20 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesNOC
+                          data: seriesLCOM
                         }]
                   },
                 });
-
-        }	
-
+        }
 
         if ($('#canvas_line4').length ){
 
-                var canvas_line4 = new Chart(document.getElementById("canvas_line4"), {
+                var canvas_line_04 = new Chart(document.getElementById("canvas_line4"), {
                   type: 'line',
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "NOI",
+                          label: "SIX",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -233,21 +227,20 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesNOI
+                          data: seriesSIX
                         }]
                   },
-                });		
-
+                });
         }
-        
-                if ($('#canvas_line5').length ){
+
+        if ($('#canvas_line5').length ){
 
                 var canvas_line_05 = new Chart(document.getElementById("canvas_line5"), {
                   type: 'line',
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "NOP",
+                          label: "WMC",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -255,21 +248,21 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesNOP
+                          data: seriesWMC
                         }]
-                  },
-                });		
+                  }
+                });
 
         }
         
-                if ($('#canvas_line6').length ){
+        if ($('#canvas_line6').length ){
 
-                var canvas_line6 = new Chart(document.getElementById("canvas_line6"), {
+                var canvas_line_06 = new Chart(document.getElementById("canvas_line6"), {
                   type: 'line',
                   data: {
                         labels: xAxis,
                         datasets: [{
-                          label: "TLOC",
+                          label: "NOF",
                           backgroundColor: "rgba(38, 185, 154, 0.31)",
                           borderColor: "rgba(38, 185, 154, 0.7)",
                           pointBorderColor: "rgba(38, 185, 154, 0.7)",
@@ -277,13 +270,32 @@ function init_charts() {
                           pointHoverBackgroundColor: "#fff",
                           pointHoverBorderColor: "rgba(220,220,220,1)",
                           pointBorderWidth: 1,
-                          data: seriesTLOC
+                          data: seriesNOF
                         }]
-                  },
-                });		
+                  }
+                });
+        }
+        if ($('#canvas_line7').length ){
+
+                var canvas_line_07 = new Chart(document.getElementById("canvas_line7"), {
+                  type: 'line',
+                  data: {
+                        labels: xAxis,
+                        datasets: [{
+                          label: "NSC",
+                          backgroundColor: "rgba(38, 185, 154, 0.31)",
+                          borderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBorderColor: "rgba(38, 185, 154, 0.7)",
+                          pointBackgroundColor: "rgba(38, 185, 154, 0.7)",
+                          pointHoverBackgroundColor: "#fff",
+                          pointHoverBorderColor: "rgba(220,220,220,1)",
+                          pointBorderWidth: 1,
+                          data: seriesNSC
+                        }]
+                  }
+                });
 
         }
-        
 
     }
 
@@ -667,7 +679,7 @@ function init_charts() {
               var echartLine = echarts.init(document.getElementById('echart_line'), theme);
               echartLine.setOption({
                     title: {
-                      text: 'CA e CE',
+                      text: 'RFC',
                       subtext: 'Acoplamento'
                     },
                     tooltip: {
@@ -676,7 +688,7 @@ function init_charts() {
                     legend: {
                       x: 220,
                       y: 40,
-                      data: ['CA', 'CE']
+                      data: ['RFC']
                     },
                     toolbox: {
                       show: true,
@@ -711,7 +723,7 @@ function init_charts() {
                       type: 'value'
                     }],
                     series: [{
-                      name: 'CA',
+                      name: 'NORM',
                       type: 'line',
                       smooth: true,
                       itemStyle: {
@@ -721,9 +733,9 @@ function init_charts() {
                               }
                             }
                       },
-                      data: seriesCA
+                      data: seriesNORM
                     }, {
-                      name: 'CE',
+                      name: 'NOM',
                       type: 'line',
                       smooth: true,
                       itemStyle: {
@@ -733,7 +745,7 @@ function init_charts() {
                               }
                             }
                       },
-                      data: seriesCE
+                      data: seriesNOM
                     }]
               });
             } 

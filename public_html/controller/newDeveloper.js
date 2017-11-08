@@ -7,7 +7,7 @@
 $( document ).ready(function() {
 
 
-var RANKODE_URL = "http://localhost:41115/service/api/";
+var RANKODE_URL = "http://localhost:8080/service/api/";
 var GIT_URL = "";
 var url = window.location.href;
 
