@@ -29,16 +29,17 @@
       <div class="login_wrapper">
         <div class="animate form login_form">
           <section class="login_content">
-            <form>
+              <div class="serviceResponseLogin" id="serviceResponseLogin"></div>
+            <form id="loginForm" action="" method="post">
               <h1>Login</h1>
               <div>
-                <input type="text" class="form-control" placeholder="Username" required="" />
+                <input type="text" class="form-control" placeholder="Login" name="user" id="userLogin" required="" />
               </div>
               <div>
-                <input type="password" class="form-control" placeholder="Password" required="" />
+                <input type="password" class="form-control" placeholder="password" name="passLogin" id="passLogin" required="" />
               </div>
               <div>
-                <a class="btn btn-success submit" href="index.html">Log in</a>
+                <a class="btn btn-success submit" value="login" id="login">Log in</a>
                 <a class="reset_pass" href="#"><b>Perdeu a Senha?</b></a>
               </div>
 
@@ -81,9 +82,6 @@
               <div>
                 <input type="text" class="form-control" placeholder="Sobrenome" name="Sobrenome" id="Sobrenome"  required="required" />
               </div>
-              <div class="form-group">
-                User do <i class="fa fa-github"></i> GitHub <input type="text" class="form-control" placeholder="GitHub" name="GitHub" id="GitHub" required="required" />
-              </div>
               <div>
                 <a class="btn btn-success submit" href="#signup" value="newUser" id="newUser">Enviar</a>
               </div>
@@ -116,5 +114,6 @@
     
     <!-- Controler -->
     <script src="controller/newDeveloper.js" type="text/javascript"></script>
+    <script src="controller/loginController.js" type="text/javascript"></script>
   </body>
 </html>

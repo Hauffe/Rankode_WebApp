@@ -6,9 +6,9 @@
 
 /* PopulateTables */
 function init_PopulateTables() {
-        var URL = "http://localhost:8383/RankodeWebApp/";
+        var URL = "http://localhost:8383/RankodeFrontEnd/";
         
-        var RANKODE_URL = "http://localhost:8080/service/api/";
+        var RANKODE_URL = "http://localhost:41115/service/api/";
 
             $.ajax({
                url: RANKODE_URL+"result/findAllSources",

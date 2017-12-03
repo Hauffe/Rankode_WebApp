@@ -22,16 +22,18 @@ var url = window.location.href;
                 crossDomain: true,
                 contentType: 'application/json',
                 mimeType: 'application/json',
-                success: function(data) { 
+                success: function(data) {
+                    $("#popup").remove();
                     $("#serviceResponse").append(
-                    "<div class='alert alert-success alert-dismissible fade in' role='alert'>" +
+                    "<div class='alert alert-success alert-dismissible fade in' role='alert' id='popup'>" +
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                         "</button>" + data +
                     "</div>");
                 },
                 error: function(jqXHR) {
+                  $("#popup").remove();
                   $("#serviceResponse").append(
-                    "<div class='alert alert-danger alert-dismissible fade in' role='alert'>" +
+                    "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup'>" +
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                         "</button>" + jqXHR.responseJSON  +
                     "</div>");
