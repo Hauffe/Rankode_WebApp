@@ -4,8 +4,12 @@
  * and open the template in the editor.
  */
 $(document).ready(function() {
-    var RANKODE_URL = "http://localhost:34404/service/api/";
+    var RANKODE_URL = "http://localhost:41115/service/api/";
     var GITHUB_URL = "https://api.github.com/";
+    
+    var login = sessionStorage.getItem('login');
+    var firstName = sessionStorage.getItem('firstName');
+    var lastName = sessionStorage.getItem('lastName');
     
     function listRepositories(filter) {
 
@@ -44,15 +48,18 @@ $(document).ready(function() {
             contentType: 'application/json',
             mimeType: 'application/json',
             success: function(data) {
+                    $("#popup").remove();
                     $("#serviceResponse").append(
-                    "<div class='alert alert-success alert-dismissible fade in' role='alert'>" +
+                    "<div class='alert alert-success alert-dismissible fade in' role='alert' id='popup'>" +
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                         "</button>" + data +
                     "</div>");
+            listRepositories(filter);
                 },
             error: function(jqXHR) {
-              $("#serviceResponse").append(
-                "<div class='alert alert-danger alert-dismissible fade in' role='alert'>" +
+                $("#popup").remove();
+                $("#serviceResponse").append(
+                "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup'>" +
                     "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                     "</button>" + jqXHR.responseJSON  +
                 "</div>");
@@ -67,15 +74,16 @@ $(document).ready(function() {
             url: GITHUB_URL+"users/"+parts[3],
             success: function(data) {
                 var obj = {
-                    developer: {login:"teste"},//adicionar login de sessao
+                    developer: {login: login},
                     loginRepository:data.login,
                     repository:"GITHUB"
                 };
                 insertRepository(obj);               
             },
             error: function () {
+                $("#popup").remove();
                 $("#serviceResponse").append(
-                "<div class='alert alert-danger alert-dismissible fade in' role='alert'>" +
+                "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup'>" +
                     "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                     "</button>Usuário Github não encontrado</div>");
             }
@@ -93,16 +101,17 @@ $(document).ready(function() {
             contentType: 'application/json',
             mimeType: 'application/json',
             success: function(data) {
+                    $("#popup").remove();
                     $("#serviceResponse").append(
-                    "<div class='alert alert-success alert-dismissible fade in' role='alert'>" +
+                    "<div class='alert alert-success alert-dismissible fade in' role='alert' id='popup'>" +
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                         "</button>" + data +
                     "</div>");
                 },
             error: function(jqXHR) {
-                    console.log(jqXHR.responseJSON);
+                    $("#popup").remove();
                     $("#serviceResponse").append(
-                    "<div class='alert alert-danger alert-dismissible fade in' role='alert'>" +
+                    "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup'>" +
                         "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
                         "</button>" + jqXHR.responseJSON  +
                     "</div>");
@@ -111,7 +120,7 @@ $(document).ready(function() {
     }
     
     var filter = {
-        developer: {login:"teste"}//adicionar login do usuário logado
+        developer: {login: login}
     };
     listRepositories(filter);
    
@@ -130,6 +139,6 @@ $(document).ready(function() {
                 tr.remove();
             });		
         return false;
-        }
+        };
     })(jQuery);
 });
