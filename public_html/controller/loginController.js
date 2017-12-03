@@ -27,6 +27,9 @@ $(document).ready(function(){
                 mimeType: 'application/json',
                 success: function(data) { 
                     sessionStorage.setItem('login', data.login);
+                    sessionStorage.setItem('firstName', data.firstName);
+                    sessionStorage.setItem('lastName', data.lastName);
+                    sessionStorage.setItem('email', data.email);
                     window.location.replace(url+'/index.html');
                 },
                 error: function(jqXHR) {

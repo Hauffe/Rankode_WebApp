@@ -56,28 +56,34 @@ var GITHUB_URL = "https://api.github.com/";
     }
     
     function requestGIT(uri) {
+        console.log(uri);
         if(uri===""){
-            break;
+            $("#popup3").remove();
+            $("#serviceResponse").append(
+            "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup3'>" +
+                "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                "</button>Usuário Github não encontrado</div>");
+        }else{
+            var parts = uri.split("/");
+            $.ajax({
+                url: GITHUB_URL+"users/"+parts[3],
+                success: function(data) {
+                    var obj = {
+                        developer: {login:$("#Login").val()},
+                        loginRepository:data.login,
+                        repository:"GITHUB"
+                    };
+                    insertAccount(obj);               
+                },
+                error: function () {
+                    $("#popup3").remove();
+                    $("#serviceResponse").append(
+                    "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup3'>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
+                        "</button>Usuário Github não encontrado</div>");
+                }
+            });
         }
-        var parts = uri.split("/");
-        $.ajax({
-            url: GITHUB_URL+"users/"+parts[3],
-            success: function(data) {
-                var obj = {
-                    developer: {login:$("#Login").val()},
-                    loginRepository:data.login,
-                    repository:"GITHUB"
-                };
-                insertAccount(obj);               
-            },
-            error: function () {
-                $("#popup3").remove();
-                $("#serviceResponse").append(
-                "<div class='alert alert-danger alert-dismissible fade in' role='alert' id='popup3'>" +
-                    "<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span>" +
-                    "</button>Usuário Github não encontrado</div>");
-            }
-        });
     }
     
     $("#newUser").click(function(e){
