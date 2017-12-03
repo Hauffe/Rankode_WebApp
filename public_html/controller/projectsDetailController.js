@@ -8,7 +8,7 @@
 function init_PopulateTables() {
         var URL = "http://localhost:8383/RankodeWebApp/";
         
-        var RANKODE_URL = "http://localhost:8080/service/api/";
+        var RANKODE_URL = "http://localhost:34404/service/api/";
 
             $.ajax({
                url: RANKODE_URL+"result/findAllSources",
