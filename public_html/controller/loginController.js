@@ -4,9 +4,9 @@
 
 $(document).ready(function(){
     
-    var RANKODE_URL = "http://localhost:41115/service/api/";
+    var RANKODE_URL = "http://localhost:8080/service/api/";
     var GIT_URL = "";
-    var url = "http://localhost:8383/RankodeFrontEnd/";
+    var url = "http://localhost:8383/RankodeWebApp/";
     
 	$("#login").click(function(){
             var obj = {
